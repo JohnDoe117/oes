@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+    <bean id="jdbcTemplate" class="com.augmentum.common.JDBCTemplate" scope="singleton" />
+
+    <bean id="questionDao" class="com.augmentum.oes.dao.QuestionDao" scope="singleton" >
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+
+    <bean id="userDao" class="com.augmentum.oes.dao.UserDao" scope="singleton" >
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+
+    <bean id="questionService" class="com.augmentum.oes.service.impl.QuestionServiceImpl" scope="singleton" >
+        <property name="questionDao" ref="questionDao" />
+    </bean>
+
+    <bean id="userService" class="com.augmentum.oes.service.impl.UserServiceImpl" scope="singleton" >
+        <property name="userDao" ref="userDao" />
+    </bean>
+
+    <bean id="questionController" class="com.augmentum.oes.controller.QuestionController" scope="singleton" >
+        <property name="questionService" ref="questionService" />
+    </bean>
+
+    <bean id="userController" class="com.augmentum.oes.controller.UserController" scope="singleton" >
+        <property name="userService" ref="userService" />
+    </bean>
+</beans>

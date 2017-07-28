@@ -1,0 +1,242 @@
+*{
+    font-family: Arial;
+    font-size: 14px;
+}
+
+input{
+    border-radius: 3px;
+}
+
+.system_head{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.question_body_in{
+    width: 1240px;
+    height: 580px;
+    background-color: white;
+    position: absolute;
+    margin: 30px auto auto auto;
+}
+
+.question_create_details{
+    margin-left: 300px;
+}
+
+.question_details_id{
+    margin-top: 30px;
+}
+
+.question_details_question{
+    margin-top: 30px;
+}
+
+.question_details_question_input{
+    width: 480px;
+    height: 80px;
+    resize: none;
+    border-radius: 3px;
+}
+
+.question_details_answer{
+    margin-top: 30px;
+}
+
+.question_details_answer span{
+    display: block;
+    margin-top: 15px;
+}
+
+.question_details_answer label{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.question_details_answer_option label+input{
+    width: 445px;
+    height: 20px;
+}
+
+.question_details_button{
+    margin-top: 50px;
+}
+
+.question_details_button a{
+    background-color: orange;
+    width: 150px;
+    height: 30px;
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 5px;
+    display: block;
+    float: left;
+    margin-right: 30px;
+    line-height: 30px;
+    font-size: 18px;
+}
+
+.question_boder{
+    width: 1240px;
+    height: 580px;"
+    position: absolute;
+    background-color: white;
+    margin: 30px auto 0 auto;
+    border-radius: 5px;
+}
+
+.question_list_left_button{
+    width: 200px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 50px;
+    position: absolute;
+}
+
+.question_list_left_button div{
+    width: 180px;
+    height: 30px;
+    text-align: center;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-color: #2E4358;
+    line-height: 30px;
+}
+
+.question_list_right{
+    width: 980px;
+    height: 400px;/*can not find in UX design*/
+    border-style: solid;
+    border-width: 1px;
+    border-radiu: 5px;
+    border-color: #2E4358;
+    border-radius: 5px;
+    margin-top: 50px;
+    margin-left: 230px;
+    position: absolute;
+}
+
+.question_list_column_title{
+    width: 980px;
+    height: 40px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: 2E4358;
+    position: absolute;
+}
+
+.question_list_column_title_1,.question_list_row_once_line_1{
+    margin-left: 70px;
+    margin-right: 40px;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+}
+
+.question_list_column_title_2,.question_list_row_once_line_2{
+    width: 60px;
+    margin-right: 90px;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+}
+
+.question_list_column_title_3,.question_list_row_once_line_3{
+    text-align: center;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+}
+
+.question_list_column_title_4,.question_list_row_once_line_4{
+    margin-left: 90px;
+    float: right;
+    height: 30px;
+    line-height: 30px;
+}
+
+.question_list_column_title_5,.question_list_row_once_line_5{
+    width: 15px;
+    margin-left: 40px;
+    margin-right: 70px;
+    float: right;
+    height: 30px;
+    line-height: 30px;
+}
+
+.question_list_column_title div{
+    line-height: 40px;
+    text-align: center;
+}
+.question_list_row{
+    width: 980px;
+    height: 300px;
+    margin-top: 40px;
+    /* position: absolute; */
+    /* top: 40px; */
+}
+
+.question_list_row_once_line{
+    width: 980px;
+    height: 30px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: 2E4358;
+}
+
+.question_list_row_once_line div{
+    line-height: 30px;
+}
+
+.question_list_row_once_line_4{
+    height: 30px;
+    cursor: pointer;
+    background-image: url("image/ICN_Edit_15x15.png.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.question_list_row_once_line_5{
+    height: 30px;
+    cursor: pointer;
+    background-image: url("image/ICN_Unselected_15x15.png.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.question_list_delete_button{
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-right: 40px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-radius: 3px;
+}
+
+.system_outer_boder{
+    width: 1280px;
+    height: 640px;
+    background-color: #D2DBE4;
+    position: absolute;
+    top: 120px;
+}
+
+.button{
+    background-color: #FFFFFF;
+    border: none;
+
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.pagination_input{
+    width: 20px;
+}

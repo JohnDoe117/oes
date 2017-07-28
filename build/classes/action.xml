@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controller>
+    <action name="createquestion" class="questionController" method="create" httpMethod="POST">
+        <result name="sucess" view="questionlist.action" redirect="true" />
+        <result name="error" view="/WEB-INF/jsp/question/createquestion.jsp" redirect="false"/>
+    </action>
+    <action name="deletequestion" class="questionController" method="delete">
+        <result name="return_page" view="questionlist.action" redirect="true" viewParameter="status:attribute, currentPage:attribute"/>
+    </action>
+    <action name="questionlist" class="questionController" method="list" >
+        <result name="sucess" view="/WEB-INF/jsp/question/questionlist.jsp" redirect="false" />
+    </action>
+    <action name="editquestion" class="questionController" method="edit" >
+        <result name="sucess" view="/WEB-INF/jsp/question/createquestion.jsp" redirect="false"/>
+        <result name="error" view="questionlist.action" redirect="true" />
+    </action>
+    <action name="login" class="userController" method="login" >
+        <result name="input" view="/WEB-INF/jsp/question/login.jsp" redirect="false"/>
+        <result name="hadlogin" view="questionlist.action" redirect="true"/>
+    </action>
+    <action name="login" class="userController" method="savelogin" httpMethod="POST">
+        <result name="error" view="/WEB-INF/jsp/question/login.jsp" redirect="false" />
+        <result name="sucess" view="questionlist.action" redirect="true" viewParameter="go:attribute"/>
+    </action>
+</controller>

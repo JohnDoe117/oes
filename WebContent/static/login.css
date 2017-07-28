@@ -1,0 +1,173 @@
+@charset "UTF-8";
+
+body
+{
+    background-color:#FFFFFF;
+    width:1280px;
+    height:760px;
+    text-align: center;
+}
+
+.login_title{
+    width:180px;
+    height:90px;
+    background-image:url(images/LOGO_Web_Login_90x180.png);
+    position:absolute;
+    top:300px;
+    left:170px;
+    text-indent:-1000px;
+}
+
+.login_introduce{
+    position:absolute;
+    top:440px;
+    left:170px;
+    font-family:"Arial";
+    font-size:30px;
+    color:#2E4358
+    
+}
+
+.login_welcome{
+    position:absolute;
+    top:106px;
+    left:730px;
+    text-align:left;
+    font-family:"Arial";
+    font-size:24px;
+    color:#2E4358;
+    
+}
+
+.login_form {
+    width: 400px;
+    height: 320px;
+    border-radius: 5px;
+    background-color: #2E4358;
+    position: absolute;
+    top: 150px;
+    left: 730px;
+    font-family: "Arial";
+    font-size: 14px;
+}
+
+.login_form_errorMessage {
+    position: absolute;
+    top: 30px;
+    left: 50px;
+    border: 1px solid;
+    border-color: #FFFFFF;
+    width: 300px;
+    height: 20px;
+    text-align: left;
+    color: #FF0000;
+    background-color: #FCC898;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.login_form_line {
+    margin-top: 20px;
+    margin-left: 50px;
+    height: 35px;
+    width: 300px;
+    border-radius: 3px;
+    position: relative;
+    background-color: #FFFFFF;
+}
+
+#loginForm img {
+    position: absolute;
+    top: 7px;
+    left: 15px;
+    height: 20px;
+    width: 20px;
+}
+
+#loginForm input {
+    position: absolute;
+    top: 0px;
+    left: 40px;
+    height: 35px;
+    width: 260px;
+    text-indent: 4px;
+    border-style: none;
+    border-radius: 3px;
+    outline: none;
+    font-size: 14px;
+}
+
+.login_form_errorIcon {
+    position: absolute;
+    top: 7px;
+    left: 310px;
+    height: 20px;
+    width: 20px;
+    background-image: url(images/ICN_Client_Login_Wrong_20X20.png);
+}
+
+.login_form_button {
+    margin-top: 20px;
+    margin-left: 50px;
+    background-color: #FE9901;
+    border-radius: 3px;
+    height: 35px;
+    width: 300px;
+    color: #FFFFFF;
+    line-height: 35px;
+    cursor: pointer;
+    font-family: "Arial bold";
+    font-size: 20px;
+}
+
+.login_footer{
+    width: 100%;
+    position: absolute;
+    top: 550px;
+    border-top: 1px solid #2E4358;
+    margin-bottom: 110px;
+    font-family: "Arial";
+    font-size: 12px;
+    color: #2E4358;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.login_form_other {
+margin-top: 20px;
+    margin-top: 20px;
+    margin-left: 50px;
+    height: 35px;
+    width: 300px;
+    position: relative;
+    color: #FFFFFF;
+}
+
+.login_form_other_check {
+position: absolute;
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+    background-color: #FFFFFF;
+}
+
+.login_form_other_remeber {
+    position: absolute;
+    left: 25px;
+    font-size: 12px;
+
+}
+
+.remeber_img{
+    top: 0px;
+    left: 0px;
+    height: 12px;
+    width: 12px;
+}
+
+.login_form_other_forget {
+    position: absolute;
+    right: 0px;
+    font-size: 12px;
+    cursor: pointer;
+}
