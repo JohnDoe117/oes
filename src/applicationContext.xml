@@ -19,7 +19,7 @@
  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
            <list>
-                <value>classpath:app.properties</value>
+                <value>classpath:config.properties</value>
            </list>
         </property>
     </bean>
@@ -41,18 +41,45 @@
             <ref bean="dataSource" />
         </property>
     </bean>
+   <bean id="baseDao" abstract="true">
+       <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+
+    <bean id="questionDao" class="com.augmentum.oes.dao.QuestionDao" parent="baseDao"/>
+      
+    <bean id="userDao" class="com.augmentum.oes.dao.UserDao" parent="baseDao" />
+
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
     
-    <!--  
-    <bean id="jdbcTemplate" class="com.augmentum.common.JDBCTemplate" scope="singleton" />
-    -->
-    <bean id="questionDao" class="com.augmentum.oes.dao.QuestionDao" scope="singleton" >
-        <property name="jdbcTemplate" ref="jdbcTemplate" />
-    </bean>
-
-    <bean id="userDao" class="com.augmentum.oes.dao.UserDao" scope="singleton" >
-        <property name="jdbcTemplate" ref="jdbcTemplate" />
-    </bean>
-
+    <bean id="logMethodTimeAdvice" class="com.augmentum.oes.service.impl.LogMethodTimeAspect"/>
+    
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="delete*" propagation="REQUIRED" read-only="false" />
+            <tx:method name="create*" propagation="REQUIRED" read-only="false" />
+            <tx:method name="update*" propagation="REQUIRED" read-only="false" />
+            <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+      
+   <aop:config>
+        <aop:pointcut id="pc" expression="execution(* com.augmentum.oes.service..*.*(..))" />
+        <aop:advisor pointcut-ref="pc" advice-ref="txAdvice" order="1" />
+        
+        <aop:aspect id="logMethodTimeAspect" ref="logMethodTimeAdvice">  
+            <aop:pointcut id="businessService" expression="execution(* com.augmentum.oes.service..*.*(..))" />
+            <aop:around pointcut-ref="businessService" method="doAround"/>  
+            <aop:before pointcut-ref="businessService" method="doBefore"/>  
+            <aop:after pointcut-ref="businessService" method="doAfter"/>
+            <aop:after-throwing pointcut-ref="businessService" method="doThrowing" throwing="ex"/>
+        </aop:aspect>
+    </aop:config>
+      
+    
+    
     <bean id="questionService" class="com.augmentum.oes.service.impl.QuestionServiceImpl" scope="singleton" >
         <property name="questionDao" ref="questionDao" />
     </bean>

@@ -1,5 +1,7 @@
 package com.augmentum.oes.service.impl;
 
+import org.apache.log4j.Logger;
+
 import com.augmentum.oes.dao.UserDao;
 import com.augmentum.oes.exception.ParameterException;
 import com.augmentum.oes.exception.ServiceException;
@@ -7,7 +9,7 @@ import com.augmentum.oes.model.User;
 import com.augmentum.oes.service.UserService;
 
 public class UserServiceImpl implements UserService {
-
+    private final Logger logger = Logger.getLogger(UserServiceImpl.class);
     private UserDao userDao;
 
     @Override

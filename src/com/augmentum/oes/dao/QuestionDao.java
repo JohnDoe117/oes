@@ -45,27 +45,6 @@ public class QuestionDao {
         }, keyHolder);
 
         que.setId(keyHolder.getKey().intValue());
-
-        // String sql = "INSERT INTO question "
-        // +
-        // "(question,desciption,option_a,option_b,option_c,option_d,answer,creat_time,update_time)"
-        // + " VALUES(?,?,?,?,?,?,?,NOW(),NOW())";
-        // int id = jdbcTemplate.creat(sql, new JDBCAbstractCallback<Question>()
-        // {
-        //
-        // @Override
-        // public void setParams(PreparedStatement stem) throws SQLException {
-        // stem.setString(1, que.getQuestion());
-        // stem.setString(2, que.getDesciption());
-        // stem.setString(3, que.getOptionA());
-        // stem.setString(4, que.getOptionB());
-        // stem.setString(5, que.getOptionC());
-        // stem.setString(6, que.getOptionD());
-        // stem.setString(7, que.getAnswer());
-        //
-        // }
-        // });
-        // que.setId(id);
     }
 
     public List<Question> query(final Pagination pagination) {
@@ -93,32 +72,6 @@ public class QuestionDao {
             }
         });
         return questions;
-        // List<Question> questions = jdbcTemplate.query(sql, new
-        // JDBCAbstractCallback<Question>() {
-        //
-        // @Override
-        // public void setParams(PreparedStatement stem) throws SQLException {
-        // stem.setInt(1, pagination.getOffset());
-        // stem.setInt(2, pagination.getPageSize());
-        // }
-        //
-        // @Override
-        // public Question rsToObject(ResultSet rs) throws SQLException {
-        // Question question = new Question();
-        // question.setId(rs.getInt("id"));
-        // question.setQuestion(rs.getString("question"));
-        // question.setDesciption(rs.getString("desciption"));
-        // question.setOptionA(rs.getString("option_a"));
-        // question.setOptionB(rs.getString("option_b"));
-        // question.setOptionC(rs.getString("option_c"));
-        // question.setOptionD(rs.getString("option_d"));
-        // question.setAnswer(rs.getString("answer"));
-        // question.setCreat_timeDate(rs.getDate("creat_time"));
-        // question.setUpdate_time(rs.getDate("update_time"));
-        // return question;
-        // }
-        // });
-
     }
 
     private int getQuestionCount() {

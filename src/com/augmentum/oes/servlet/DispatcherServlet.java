@@ -165,11 +165,6 @@ public class DispatcherServlet extends HttpServlet {
                 param[0] = Map.class;
                 param[1] = Map.class;
 
-                // Class<?> cls = Class.forName(clsName);
-                // Object controller = cls.newInstance();
-
-                // Object controller =
-                // BeanFactory.getInstance().getBean(clsName);
                 Object controller = SpringUtil.getBean(clsName);
 
                 String methodName = actionConfig.getMethodName();

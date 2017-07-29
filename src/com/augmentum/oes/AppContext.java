@@ -3,9 +3,22 @@ package com.augmentum.oes;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.augmentum.oes.model.User;
+
 public class AppContext {
     private static ThreadLocal<AppContext> appContextMap = new ThreadLocal<AppContext>();
     private Map<String, Object> objiects = new HashMap<String, Object>();
+    private static String contextPath;
+
+    public static String getContextPath() {
+        return contextPath;
+    }
+
+    public static void setContextPath(String contextPath) {
+        if (AppContext.contextPath == null) {
+            AppContext.contextPath = contextPath;
+        }
+    }
 
     private AppContext() {
     }
@@ -46,4 +59,27 @@ public class AppContext {
         this.removeObject(string);
     }
 
+    public User getUser() {
+        return (User) objiects.get(Oes.APP_CONTEXT_USER);
+    }
+
+    public void setUser(User user) {
+        objiects.put(Oes.APP_CONTEXT_USER, user);
+    }
+
+    public String getUserName() {
+        User user = (User) objiects.get(Oes.APP_CONTEXT_USER);
+        if (user != null) {
+            return user.getUserName();
+        }
+        return "";
+    }
+
+    public int getUserId() {
+        User user = (User) objiects.get(Oes.APP_CONTEXT_USER);
+        if (user != null) {
+            return user.getId();
+        }
+        return 0;
+    }
 }
