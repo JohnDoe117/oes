@@ -6,21 +6,21 @@ import java.util.List;
 public class ResultConfig {
     private String name;
     private String view;
-    private Boolean redirect;
+    private boolean redirect;
 
     private List<ViewParameterConfig> viewParameterConfigs = new ArrayList<ViewParameterConfig>();
+
+    public void addViewParameterConfig(ViewParameterConfig viewParameterConfig) {
+        this.viewParameterConfigs.add(viewParameterConfig);
+    }
 
     public List<ViewParameterConfig> getViewParameterConfigs() {
         return viewParameterConfigs;
     }
 
-    public void addViewParameterConfigs(ViewParameterConfig viewParameterConfig) {
-        this.viewParameterConfigs.add(viewParameterConfig);
-    }
-
     public void setViewParameterConfigs(List<ViewParameterConfig> viewParameterConfigs) {
         if (viewParameterConfigs == null) {
-            viewParameterConfigs = new ArrayList<ViewParameterConfig>();
+            this.viewParameterConfigs = new ArrayList<ViewParameterConfig>();
         }
         this.viewParameterConfigs = viewParameterConfigs;
     }
@@ -41,11 +41,11 @@ public class ResultConfig {
         this.view = view;
     }
 
-    public Boolean getRedirect() {
+    public boolean isRedirect() {
         return redirect;
     }
 
-    public void setRedirect(Boolean redirect) {
+    public void setRedirect(boolean redirect) {
         this.redirect = redirect;
     }
 

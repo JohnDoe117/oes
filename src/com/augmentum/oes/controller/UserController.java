@@ -22,7 +22,7 @@ public class UserController {
         User user = (User) session.get(Oes.USER);
         ModelAndView modelAndView = new ModelAndView();
         if (user != null) {
-            modelAndView.setIsRedirect(true);
+            modelAndView.setRedirect(true);
             modelAndView.setView("/questionlist.action");
         } else {
             String go = request.get("go");
@@ -54,7 +54,7 @@ public class UserController {
                 go = go + "?" + queryString;
             }
 
-            modelAndView.setIsRedirect(true);
+            modelAndView.setRedirect(true);
             String uri = StringUtil.isEmpty(go) ? "questionlist.action" : go;
             modelAndView.setView(uri);
         } catch (ServiceException serviceExpetion) {

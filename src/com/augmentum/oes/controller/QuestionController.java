@@ -44,7 +44,7 @@ public class QuestionController {
             // QuestionService createQuestionService = new QuestionService();
             questionService.creat(que);
             modelAndView.addSessionAttribute("SUCESS_FLASH_MESSAGE", "createquestion");
-            modelAndView.setIsRedirect(true);
+            modelAndView.setRedirect(true);
             modelAndView.setView("/questionlist.action");
         } catch (ParameterException parameterException) {
             Map<String, String> errorFileMap = parameterException.getErrorFileMap();

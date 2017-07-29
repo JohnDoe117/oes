@@ -32,22 +32,22 @@
       <div id="border">
         <div class="main">
           <form method="POST" action="createquestion.action" id="createqusetionForm">
-            <input type="hidden" name="id" value="<%=StringUtil.doWithNll(question.getId()) %>">
+            <input type="hidden" name="id" value="<%=StringUtil.doWithNull(question.getId()) %>">
             <div class="question">
               <div>Question:</div>
               <div><input type="text" name="question" id="question" 
-              value="<%=StringUtil.doWithNll(question.getQuestion()) %>"></div>
+              value="<%=StringUtil.doWithNull(question.getQuestion()) %>"></div>
               <div class="answer">
                 <div>Answer:</div>
                   <div class="choose">
                     <input type="radio" name="answer" id = "option_a" value="option_a"> A <input type="text" 
-                    name="option_a" id="option_a"  value="<%=StringUtil.doWithNll(question.getOptionA()) %>"/><br />
+                    name="option_a" id="option_a"  value="<%=StringUtil.doWithNull(question.getOptionA()) %>"/><br />
                     <input type="radio" name="answer" id = "option_b" value="option_b"> B <input type="text" 
-                    name="option_b" id="option_b"  value="<%=StringUtil.doWithNll(question.getOptionB()) %>"/><br />
+                    name="option_b" id="option_b"  value="<%=StringUtil.doWithNull(question.getOptionB()) %>"/><br />
                     <input type="radio" name="answer" id = "option_c" value="option_c"> C <input type="text" 
-                    name="option_c" id="option_c"  value="<%=StringUtil.doWithNll(question.getOptionC()) %>"/><br />
+                    name="option_c" id="option_c"  value="<%=StringUtil.doWithNull(question.getOptionC()) %>"/><br />
                     <input type="radio" name="answer" id = "option_d" value="option_d"> D <input type="text" 
-                    name="option_d" id="option_d"  value="<%=StringUtil.doWithNll(question.getOptionD()) %>"/><br />
+                    name="option_d" id="option_d"  value="<%=StringUtil.doWithNull(question.getOptionD()) %>"/><br />
                 </div>
               </div>
             <div class="button">

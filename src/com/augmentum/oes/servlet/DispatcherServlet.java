@@ -2,6 +2,7 @@ package com.augmentum.oes.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -24,20 +25,21 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.augmentum.common.ActionConfig;
-import com.augmentum.common.BeanFactory;
 import com.augmentum.common.ModelAndView;
 import com.augmentum.common.ResultConfig;
 import com.augmentum.common.ViewParameterConfig;
+import com.augmentum.oes.util.SpringUtil;
 import com.augmentum.oes.util.StringUtil;
 
 public class DispatcherServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private String suffix = ".action";
+
     private Map<String, ActionConfig> actionConfigs = new HashMap<String, ActionConfig>();
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init();
+        super.init(config);
         String suffixFromConf = config.getInitParameter("suffix");
         if (!StringUtil.isEmpty(suffixFromConf)) {
             suffix = suffixFromConf;
@@ -45,11 +47,12 @@ public class DispatcherServlet extends HttpServlet {
         InputStream inputStream = null;
         try {
             inputStream = DispatcherServlet.class.getClassLoader().getResourceAsStream("action.xml");
+
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder;
-            builder = factory.newDocumentBuilder();
+            DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(inputStream);
             Element element = document.getDocumentElement();
+
             NodeList actionNodes = element.getElementsByTagName("action");
             if (actionNodes == null) {
                 return;
@@ -61,8 +64,8 @@ public class DispatcherServlet extends HttpServlet {
 
                 String name = actionElement.getAttribute("name");
                 actionConfig.setName(name);
-                String clsname = actionElement.getAttribute("class");
-                actionConfig.setClsName(clsname);
+                String clsName = actionElement.getAttribute("class");
+                actionConfig.setClsName(clsName);
                 String methodName = actionElement.getAttribute("method");
                 actionConfig.setMethodName(methodName);
 
@@ -70,17 +73,19 @@ public class DispatcherServlet extends HttpServlet {
                 if (StringUtil.isEmpty(httpMethod)) {
                     httpMethod = "GET";
                 }
-                String[] httpMethodArr = httpMethod.split(",");
+                String[] httpMethodArr = StringUtil.split(httpMethod, ",");
+
                 actionConfig.setHttpMethod(httpMethodArr);
+
                 for (String httpMethodItem : httpMethodArr) {
                     actionConfigs.put(name + suffix + "#" + httpMethodItem.toUpperCase(), actionConfig);
                 }
 
-                NodeList resustNodes = actionElement.getElementsByTagName("resule");
-                if (resustNodes != null) {
-                    int resultLength = resustNodes.getLength();
+                NodeList resultNodes = actionElement.getElementsByTagName("result");
+                if (resultNodes != null) {
+                    int resultLength = resultNodes.getLength();
                     for (int j = 0; j < resultLength; j++) {
-                        Element resultElement = (Element) resustNodes.item(j);
+                        Element resultElement = (Element) resultNodes.item(j);
                         ResultConfig resultConfig = new ResultConfig();
 
                         String resultName = resultElement.getAttribute("name");
@@ -98,22 +103,25 @@ public class DispatcherServlet extends HttpServlet {
                         String viewParameter = resultElement.getAttribute("viewParameter");
 
                         if (!StringUtil.isEmpty(viewParameter)) {
-                            String[] viewParameterArr = viewParameter.split(",");
+                            String[] viewParameterArr = StringUtil.split(viewParameter, ",");
                             for (String viewParameterItem : viewParameterArr) {
-                                String[] viewParameterItemArr = viewParameterItem.split(":");
+                                String[] viewParameterItemArr = StringUtil.split(viewParameterItem, ":");
                                 String key = viewParameterItemArr[0].trim();
                                 String from = "attribute";
                                 if (viewParameterItemArr.length == 2) {
                                     from = viewParameterItemArr[1].trim();
                                 }
                                 ViewParameterConfig viewParameterConfig = new ViewParameterConfig(key, from);
-                                resultConfig.addViewParameterConfigs(viewParameterConfig);
+                                resultConfig.addViewParameterConfig(viewParameterConfig);
                             }
                         }
-                        actionConfig.addResults(resultName, resultConfig);
+
+                        actionConfig.addResult(resultName, resultConfig);
+
                     }
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -125,7 +133,6 @@ public class DispatcherServlet extends HttpServlet {
                 }
             }
         }
-
     }
 
     public DispatcherServlet() {
@@ -135,6 +142,7 @@ public class DispatcherServlet extends HttpServlet {
     @Override
     public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException,
             IOException {
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
@@ -143,10 +151,13 @@ public class DispatcherServlet extends HttpServlet {
         if (requestedUri == null || requestedUri.equals("")) {
             requestedUri = "login" + this.suffix;
         }
+
         String httpMethod = request.getMethod();
 
         ActionConfig actionConfig = actionConfigs.get(requestedUri + "#" + httpMethod.toUpperCase());
+
         HttpSession session = request.getSession();
+
         if (actionConfig != null) {
             String clsName = actionConfig.getClsName();
             try {
@@ -156,27 +167,33 @@ public class DispatcherServlet extends HttpServlet {
 
                 // Class<?> cls = Class.forName(clsName);
                 // Object controller = cls.newInstance();
-                Object controller = BeanFactory.getInstance().getBean(clsName);
-                String methodName = actionConfig.getMethodName();
-                java.lang.reflect.Method method = controller.getClass().getMethod(methodName, param);
 
-                Map<String, Object> SessionMap = new HashMap<String, Object>();
+                // Object controller =
+                // BeanFactory.getInstance().getBean(clsName);
+                Object controller = SpringUtil.getBean(clsName);
+
+                String methodName = actionConfig.getMethodName();
+                Method method = controller.getClass().getMethod(methodName, param);
+
+                Map<String, Object> sessionMap = new HashMap<String, Object>();
+
                 Enumeration<String> toSessionKeys = session.getAttributeNames();
                 while (toSessionKeys.hasMoreElements()) {
-                    String tokey = toSessionKeys.nextElement();
-                    SessionMap.put(tokey, session.getAttribute(tokey));
+                    String toKey = toSessionKeys.nextElement();
+                    sessionMap.put(toKey, session.getAttribute(toKey));
                 }
 
-                Map<String, Object> parameterMap = new HashMap<String, Object>();
+                Map<String, String> parameterMap = new HashMap<String, String>();
 
-                Enumeration<String> toRequesKeys = request.getParameterNames();
-                while (toRequesKeys.hasMoreElements()) {
-                    String tokey = toRequesKeys.nextElement();
-                    parameterMap.put(tokey, request.getParameter(tokey));
+                Enumeration<String> toRequestKeys = request.getParameterNames();
+                while (toRequestKeys.hasMoreElements()) {
+                    String toKey = toRequestKeys.nextElement();
+                    parameterMap.put(toKey, request.getParameter(toKey));
                 }
+
                 Object[] objects = new Object[2];
                 objects[0] = parameterMap;
-                objects[1] = SessionMap;
+                objects[1] = sessionMap;
 
                 ModelAndView modelAndView = (ModelAndView) method.invoke(controller, objects);
 
@@ -185,6 +202,7 @@ public class DispatcherServlet extends HttpServlet {
                 for (String key : keys) {
                     session.setAttribute(key, fromControllerSession.get(key));
                 }
+
                 Map<String, Object> fromControllerRequest = modelAndView.getRequests();
                 Set<String> keyRequests = fromControllerRequest.keySet();
                 for (String key : keyRequests) {
@@ -192,16 +210,18 @@ public class DispatcherServlet extends HttpServlet {
                 }
 
                 String view = modelAndView.getView();
+
                 ResultConfig resultConfig = actionConfig.getResult(view);
+
                 if (resultConfig == null) {
-                    if (modelAndView.getIsRedirect()) {
+                    if (modelAndView.isRedirect()) {
                         response.sendRedirect(request.getContextPath() + view);
                     } else {
                         request.getRequestDispatcher(view).forward(request, response);
                     }
                 } else {
                     String resultView = request.getContextPath() + "/" + resultConfig.getView();
-                    if (resultConfig.getRedirect()) {
+                    if (resultConfig.isRedirect()) {
                         List<ViewParameterConfig> viewParameterConfigs = resultConfig.getViewParameterConfigs();
                         if (viewParameterConfigs == null || viewParameterConfigs.isEmpty()) {
                             response.sendRedirect(resultView);
@@ -220,9 +240,11 @@ public class DispatcherServlet extends HttpServlet {
                                 } else {
                                     value = (String) request.getAttribute(name);
                                 }
+
                                 if (!StringUtil.isEmpty(value)) {
                                     sb.append(name + "=" + value + "&");
                                 }
+
                             }
 
                             if (resultView.indexOf("?") > 0) {
@@ -232,6 +254,7 @@ public class DispatcherServlet extends HttpServlet {
                             }
                             response.sendRedirect(resultView);
                         }
+
                     } else {
                         request.getRequestDispatcher(resultConfig.getView()).forward(request, response);
                     }
@@ -239,6 +262,7 @@ public class DispatcherServlet extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
                 response.sendError(500);
+
             }
         } else {
             response.sendError(404);

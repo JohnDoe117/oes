@@ -4,22 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ActionConfig {
+
     private String clsName;
     private String methodName;
     private String name;
     private String[] httpMethod;
+
     private Map<String, ResultConfig> results = new HashMap<String, ResultConfig>();
 
-    public void addResults(String key, ResultConfig resultConfig) {
+    public void addResult(String key, ResultConfig resultConfig) {
         results.put(key, resultConfig);
-    }
-
-    public ResultConfig getResult(String key) {
-        return results.get(key);
     }
 
     public Map<String, ResultConfig> getResults() {
         return results;
+    }
+
+    public ResultConfig getResult(String resultKey) {
+        return results.get(resultKey);
     }
 
     public void setResults(Map<String, ResultConfig> results) {
@@ -27,14 +29,6 @@ public class ActionConfig {
             results = new HashMap<String, ResultConfig>();
         }
         this.results = results;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String[] getHttpMethod() {
@@ -45,9 +39,12 @@ public class ActionConfig {
         this.httpMethod = httpMethod;
     }
 
-    public ActionConfig(String clsName, String methodName) {
-        this.clsName = clsName;
-        this.methodName = methodName;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ActionConfig() {
@@ -68,5 +65,4 @@ public class ActionConfig {
     public void setMethodName(String methodName) {
         this.methodName = methodName;
     }
-
 }
